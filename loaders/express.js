@@ -1,10 +1,10 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
-export default async ({ app  }: { app: express.Application  }) => {
+export default async ({ app  }) => {
 
-    app.get('/health', (req, res) => { res.status(200).end();  });
+    app.get('/health', (req, res) => { res.status(200).send({status: "OK"});  });
     app.head('/health', (req, res) => { res.status(200).end();  });
     app.enable('trust proxy');
 

@@ -1,17 +1,18 @@
-const loaders = require('./loaders');
-const express = require('express');
+import express from 'express'
+import loaders from './loaders/index.js'
+
+require('dotenv').config()
 
 async function startServer() {
     const app = express();
-    await loaders.init({ expressApp: app  });
+    await loaders({ expressApp: app  });
 
-    app.listen(process.env.PORT, err => {
+    app.listen(process.env.SERVER_PORT, err => {
         if (err) {
             console.log(err);
             return;
-
         }
-        console.log(`Your server is ready !`);
+        console.log(`Your server is running at port: ${process.env.SERVER_PORT}`);
     });
 }
 
