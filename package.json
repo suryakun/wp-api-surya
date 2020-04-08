@@ -1,25 +1,43 @@
 {
     "name": "wp-api-surya",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "./src",
     "author": "Suryakun <Surya.surakhman@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-        "start": "yarn build && node dist/src/index.js"
+        "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
+        "test": "mocha -r ts-node/register ./src/test/**/*.spec.ts --exit",
+        "build": "tsc",
+        "start": "node .",
+        "dev": "ts-node ./src/index.ts",
+        "coverage": "nyc yarn test"
     },
     "dependencies": {
+        "@types/cors": "^2.8.6",
+        "@types/express": "^4.17.4",
+        "@types/express-pino-logger": "^4.0.2",
+        "@types/node": "^13.11.0",
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
-        "morgan": "^1.10.0"
+        "express-pino-logger": "^4.0.0",
+        "mocha": "^7.1.1",
+        "nyc": "^15.0.1",
+        "pino": "^6.1.1",
+        "pino-pretty": "^4.0.0"
     },
     "devDependencies": {
+        "@types/chai": "^4.2.11",
+        "@types/mocha": "^7.0.2",
+        "@types/pino": "^5.17.0",
         "babel-cli": "^6.26.0",
         "babel-preset-es2015": "^6.24.1",
+        "chai": "^4.2.0",
+        "chai-http": "^4.3.0",
         "rimraf": "^3.0.2",
+        "ts-node": "^8.8.2",
+        "tslint": "^6.1.1",
         "typescript": "^3.8.3"
     }
 }
