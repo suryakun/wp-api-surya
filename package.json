@@ -1,0 +1,14 @@
+{
+  "name": "wp-api-surya",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Suryakun <Surya.surakhman@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}
