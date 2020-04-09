@@ -6,7 +6,7 @@
     "license": "MIT",
     "scripts": {
         "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-        "test": "mocha -r ts-node/register ./src/test/**/*.spec.ts --exit",
+        "test": "env ENV=test mocha -r ts-node/register ./src/test/**/*.spec.ts --exit",
         "build": "tsc",
         "start": "node .",
         "dev": "ts-node ./src/index.ts",
