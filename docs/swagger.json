@@ -1,0 +1,50 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Warung pintar API coding test - Surya",
+        "description": "A simple API in order to fulfill the task from Warung Pintar"
+    },
+    "schemes": [
+        "http"
+    ],
+    "host": "localhost:8080",
+    "basePath": "/v1",
+    "paths": {
+        "/messages": {
+            "get": {
+                "summary": "Gets all messages",
+                "description": "Returns a list containing all messages.",
+                "responses": {
+                    "200": {
+                        "description": "A list of Message",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "required": [
+                                    "messages"
+
+                                ],
+                                "properties": {
+                                    "messages": {
+                                        "type": "string"
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}
