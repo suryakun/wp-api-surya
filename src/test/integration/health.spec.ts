@@ -1,19 +1,12 @@
-import chai from 'chai'
-import chaiHttp from 'chai-http'
-import { startServer } from '../../index'
-
-chai.use(chaiHttp)
-chai.should()
+import request from 'supertest'
+import app from '../../index'
 
 describe("Heath", () => {
     describe("GET /health", () => {
         it("should return ok", done => {
-            chai.request(startServer())
-                .get('/health')
-                .end((err, res) => {
-                    res.should.have.status(200)
-                    done()
-                })
+            request(app)
+                .get("/health")
+                .expect(200, {status: "OK"}, done)
         })
     })
 })

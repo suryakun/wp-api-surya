@@ -7,7 +7,8 @@ import { logger } from '../utils/logger'
 export default (app: Application) => {
     app.use(cors());
     app.use(expressPinoLogger({logger}))
-    app.use(bodyParser.urlencoded({ extended: false  }));
+    app.use(bodyParser.json())
+    app.use(bodyParser.urlencoded({ extended: true  }));
     app.get('/health', (req: Request , res: Response) => { res.status(200).send({status: "OK"});  });
     app.head('/health', (req: Request , res: Response) => { res.status(200).end();  });
     app.enable('trust proxy');

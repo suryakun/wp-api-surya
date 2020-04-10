@@ -27,6 +27,6 @@ describe("Testing Service", () => {
     it("Service add empty message", () => {
         const svc = new Service(repo)
         const msg = svc.addNewMessage("")
-        expect(msg).eql(undefined)
+        expect(msg).eql(null)
     })
 })

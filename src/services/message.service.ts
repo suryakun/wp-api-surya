@@ -2,6 +2,11 @@ import { MessageRepoInterface } from '../repositories/message.repo'
 import Message, { MessageInterface } from '../models/message.model'
 import { logger } from '../utils/logger'
 
+export interface MessageServiceInterface {
+    addNewMessage(str: string) : MessageInterface;
+    getAllMessages() : MessageInterface[];
+}
+
 export default class MessageService {
     private messageRepo : MessageRepoInterface;
     constructor(messageModel : MessageRepoInterface) {
@@ -10,12 +15,16 @@ export default class MessageService {
 
     addNewMessage(msg: string) : MessageInterface {
         try {
-            if(!msg.length) throw new Error("Message empty");
+            if(!msg || !msg.length)
+            {
+                throw new Error("Message empty")
+            }
             const message = new Message(msg, new Date());
             this.messageRepo.add(message)
             return message;
-        } catch(err) {
-            logger.error(err)
+        }catch(err) {
+            logger.error("Message Empty")
+            return null
         }
     };
 

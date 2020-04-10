@@ -5,9 +5,9 @@ import { logger } from './utils/logger'
 import routerV1 from './api/v1/router'
 
 dotenv.config()
+const app = express();
 
-export function startServer() : express.Application {
-    const app = express();
+function startServer() : express.Application {
     loaders(app);
 
     app.use("/v1", routerV1)
@@ -22,6 +22,6 @@ export function startServer() : express.Application {
     return app
 }
 
-if(process.env.npm_lifecycle_event !== "test") {
-    startServer()
-}
+startServer()
+
+export default app
