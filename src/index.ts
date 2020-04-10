@@ -1,27 +1,53 @@
+import http from 'http'
 import express from 'express'
-import loaders from './loaders/index'
 import dotenv from 'dotenv'
+import loaders from './loaders/index'
 import { logger } from './utils/logger'
 import routerV1 from './api/v1/router'
 
 dotenv.config()
-const app = express();
 
-function startServer() : express.Application {
-    loaders(app);
+class Server {
+    public readonly port: string;
+    private app: express.Application;
+    private server: http.Server;
 
-    app.use("/v1", routerV1)
+    constructor(PORT: string) {
+        this.port = PORT
+        this.createApp()
+        this.createRouters()
+        this.createServer()
+        this.sockets();
+        this.listen()
+    }
 
-    app.listen(process.env.SERVER_PORT, err => {
-        if (err) {
-            logger.error(err)
-            return;
-        }
-        logger.info(`Service is running`)
-    });
-    return app
+    private createApp(): void {
+        this.app = express()
+        loaders(this.app)
+    }
+
+    private createRouters(): void {
+        this.app.use("/v1", routerV1 )
+    }
+
+    private createServer(): void {
+        this.server = http.createServer(this.app)
+    }
+
+    private sockets(): void {
+        logger.info("socket")
+    }
+
+    private listen(): void {
+        this.server.listen(this.port, () => {
+            logger.info(`Server running at Port ${this.port}`)
+        })
+    }
+
+    public getAppServer() : express.Application {
+        return this.app
+    }
 }
 
-startServer()
-
+const app = new Server(process.env.SERVER_PORT).getAppServer()
 export default app
