@@ -13,7 +13,7 @@ export default class MessageController {
     addNewMessage = async (req: Request, res: Response) : Promise<void> => {
         try {
             const message = this.service.addNewMessage(req.body.message)
-            if(!message) { throw new Error("Message Empty") }
+            if(message === null) { throw new Error("Message Empty") }
             res.status(201).send({message})
         } catch(err) {
             logger.error(err)

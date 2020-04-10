@@ -2,7 +2,7 @@ import express, { Request, Response } from "express"
 import MessageController from "./message.controller"
 import MessageService from '../../services/message.service'
 import MessageRepo from '../../repositories/message.repo'
-
+import { socket } from '../../index'
 
 export const router = express.Router()
 const repo = new MessageRepo()

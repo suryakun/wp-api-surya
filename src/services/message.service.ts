@@ -1,6 +1,8 @@
+import WebSocket from 'ws'
 import { MessageRepoInterface } from '../repositories/message.repo'
 import Message, { MessageInterface } from '../models/message.model'
 import { logger } from '../utils/logger'
+import { socket } from '../index'
 
 export interface MessageServiceInterface {
     addNewMessage(str: string) : MessageInterface;
@@ -15,15 +17,18 @@ export default class MessageService {
 
     addNewMessage(msg: string) : MessageInterface {
         try {
-            if(!msg || !msg.length)
+            if(msg === "")
             {
                 throw new Error("Message empty")
             }
             const message = new Message(msg, new Date());
-            this.messageRepo.add(message)
-            return message;
+            const result = this.messageRepo.add(message)
+            socket.clients.forEach((client: any) => {
+                client.send(JSON.stringify(result))
+            })
+            return result;
         }catch(err) {
-            logger.error("Message Empty")
+            logger.error(err)
             return null
         }
     };

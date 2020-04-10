@@ -1,6 +1,7 @@
 import http from 'http'
 import express from 'express'
 import dotenv from 'dotenv'
+import ws from 'ws'
 import loaders from './loaders/index'
 import { logger } from './utils/logger'
 import routerV1 from './api/v1/router'
@@ -11,6 +12,7 @@ class Server {
     public readonly port: string;
     private app: express.Application;
     private server: http.Server;
+    private webSocket: any;
 
     constructor(PORT: string) {
         this.port = PORT
@@ -35,7 +37,12 @@ class Server {
     }
 
     private sockets(): void {
-        logger.info("socket")
+        const WebSocketServer = require("ws").Server;
+        const wss = new WebSocketServer({port: 40510})
+        wss.on("connection", (w: any) : void => {
+            logger.info(`Client connected to the socket server`)
+        })
+        this.webSocket = wss
     }
 
     private listen(): void {
@@ -47,7 +54,13 @@ class Server {
     public getAppServer() : express.Application {
         return this.app
     }
+
+    public getWebSocket() : any {
+        return this.webSocket
+    }
 }
 
-const app = new Server(process.env.SERVER_PORT).getAppServer()
+const instance = new Server(process.env.SERVER_PORT)
+const app = instance.getAppServer()
+export const socket = instance.getWebSocket()
 export default app
